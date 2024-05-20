@@ -76,6 +76,9 @@ textarea {
 
 
 .message-display {
+  position: relative;
+  top: 10px;
+  left: 20px;
   background-color: white;
   padding: 20px;
   border-radius: 10px;
