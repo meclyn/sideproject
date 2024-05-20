@@ -12,10 +12,17 @@
             <form id="messageForm">
                 <input type="text" id="titulo" placeholder="Título" required>
                 <textarea placeholder="Escreva sua ideia aqui..." id="mensagem" required></textarea>
-                <button type="submit">Postar</button>
-            </form>
-            <div id="mensagens"></div>
+                <button type="submit" onclick="mensagens()">Postar</button>
+            </form>  
     </div>
+    <div class="message-display">
+        <h2>Lista de Ideias</h2>
+        <div id="mensagens"></div>
+    </div>
+
+
+
+
     <script src='mensagens.js'></script>
 </body>
 </html>
