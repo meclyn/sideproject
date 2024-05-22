@@ -2,46 +2,70 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const cors = require('cors');
 
 const app = express();
 app.use(express.json());
+app.use(cors());
 
-//conectando ao mongodb
-mongoose.connect('mongodb://localhost/secretproject', {
+// Conectando ao MongoDB
+mongoose.connect('mongodb://localhost:27017/secretproject', {
     useNewUrlParser: true,
     useUnifiedTopology: true
+}).then(() => {
+    console.log('Conectado ao MongoDB');
+}).catch((err) => {
+    console.error('Erro ao conectar ao MongoDB', err);
 });
 
-//Modelo de usuario
-
+// Modelo de usuário
 const User = require('./models/User');
 
-//Rotas de aut.
-
+// Rotas de autenticação
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
-    // criptografando a senha
+    // Verificar se o usuário já existe
+    const existingUser = await User.findOne({ username });
+    if (existingUser) {
+        return res.status(400).send('Usuário já existe');
+    }
+
+    // Criptografar a senha
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    //criar um novo user
-    const user = new User ({ username, password: hashedPassword});
+    // Criar um novo usuário
+    const user = new User({ username, password: hashedPassword });
+    await user.save();
+
+    res.status(201).send('Usuário registrado com sucesso');
 });
 
 app.post('/login', async (req, res) => {
     const { username, password } = req.body;
 
-    //verificar se o user existe
-    const user = await User.findOne({ username});
+    // Verificar se o usuário existe
+    const user = await User.findOne({ username });
     if (!user) {
-        return res.status(400).send('Usuario não encontrado');
+        return res.status(400).send('Usuário não encontrado');
     }
 
-    // gerar um token jwt
+    // Verificar a senha
+    const isPasswordValid = await bcrypt.compare(password, user.password);
+    if (!isPasswordValid) {
+        return res.status(400).send('Senha incorreta');
+    }
+
+    // Gerar um token JWT
     const token = jwt.sign({ userId: user._id }, 'secretkey');
-    res.send({ token});
+    res.send({ token });
+});
+
+// Rota GET para a raiz
+app.get('/', (req, res) =>{
+    res.send('Servidor está funcionando');
 });
 
 app.listen(3000, () => {
-    console.log('Servidor subiu porta 3000')
-})
+    console.log('Servidor subiu na porta 3000');
+});

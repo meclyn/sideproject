@@ -5,16 +5,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Registrar-se</title>
     <link rel="stylesheet" href="style.css">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
     <div class="wrapper">
-        <form id="loginForm">
+        <form onsubmit="registrar(); return false;">
             
-            <h1>Login</h1>
+            <h1>Registrar-se</h1>
             <div class="input-box">
                 <input type="text" id="username" placeholder="Usuário" required>
                 <i class='bx bxs-user'></i>
@@ -23,20 +23,16 @@
                 <input type="password" id="password" placeholder="Senha" required>
                 <i class='bx bxs-lock-alt' ></i>
             </div>
-            <div class="remember-forgot">
-                <label><input type="checkbox"> Lembrar</label>
-                <a href="#">Esqueceu a senha?</a>
-            </div>
-            <button type="button" class="btn" onclick="login()">Enviar</button>
+            <div class="remember-forgot"></div>
+            <button type="button" class="btn" onclick="registrar()">Enviar</button>
         </form>
 
             <div class="register-link">
-                <p>Não tem uma conta? <a
-                     href="register.html">Registrar</a></p>
+                <p>Já possui uma conta? <a
+                     href="index.html">Login</a></p>
             </div>  
     </div>
     <script src="script.js"></script>
-    <script src="mensagens.js"></script>
     <script src="theme.js"></script>
 </body>
 </html>
