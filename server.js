@@ -48,7 +48,7 @@ const User = require('./models/User');
 app.post('/register', async (req, res) => {
     const { username, password } = req.body;
 
-    // Verificar se o usuário já existe
+    // Verificar se o usuário já existe!
     const existingUser = await User.findOne({ username });
     if (existingUser) {
         return res.status(400).send('Usuário já existe');
