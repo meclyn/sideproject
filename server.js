@@ -9,7 +9,7 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Conectando ao MongoDB.
+// Conectando ao MongoDB
 mongoose.connect('mongodb://localhost:27017/secretproject', {
     useNewUrlParser: true,
     useUnifiedTopology: true
